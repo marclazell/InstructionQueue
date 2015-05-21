@@ -1,5 +1,7 @@
 package com.tp.pojo;
 
+import com.tp.exception.InvalidMessageException;
+
 /**
  * Created by dev on 21/05/15.
  */
@@ -61,6 +63,30 @@ public class InstructionMessage {
 
     public InstructionMessage() {
     }
+
+    public void isInstructionMessageValid() throws InvalidMessageException {
+
+        if (this.getInstructionType() <= 0 || this.getInstructionType() >= 100) {
+            throw new InvalidMessageException("Instruction Type must be greater than 0 and less than 100");
+        }
+
+        if (this.getProductCode() < 0) {
+            throw new InvalidMessageException("Product Code must be greater than 0");
+        }
+
+        if (this.getQuantity() < 0 ) {
+            throw new InvalidMessageException("Quantity must be greater than 0");
+        }
+
+        if (this.getUOM() < 0 || this.getUOM() > 256 ) {
+            throw new InvalidMessageException("UOM must be greater than or equal to 0 and less than 256");
+        }
+
+        if (this.getTimeStamp() < 0 ) {
+            throw new InvalidMessageException("Timestamp must be greater than 0");
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
