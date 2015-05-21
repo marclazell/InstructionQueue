@@ -64,7 +64,7 @@ public class InstructionMessage {
     public InstructionMessage() {
     }
 
-    public void isInstructionMessageValid() throws InvalidMessageException {
+    public boolean isInstructionMessageValid() throws InvalidMessageException {
 
         if (this.getInstructionType() <= 0 || this.getInstructionType() >= 100) {
             throw new InvalidMessageException("Instruction Type must be greater than 0 and less than 100");
@@ -85,6 +85,8 @@ public class InstructionMessage {
         if (this.getTimeStamp() < 0 ) {
             throw new InvalidMessageException("Timestamp must be greater than 0");
         }
+
+        return true;
     }
 
 

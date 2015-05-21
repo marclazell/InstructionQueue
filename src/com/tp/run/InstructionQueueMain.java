@@ -26,9 +26,10 @@ public class InstructionQueueMain {
             InstructionMessage im = new InstructionMessage(instructionType, productCode, quantity, uom, timestamp);
 
             // check valid first - throw exception if not
-            im.isInstructionMessageValid();
+            if (im.isInstructionMessageValid()) {
+                instructionQueue.addToList(im);
+            }
 
-            instructionQueue.addToList(im);
         }
 
         // show all instructions and show sorting
