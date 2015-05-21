@@ -26,13 +26,17 @@ public class InstructionQueue {
     }
 
     public void removeFromList(InstructionMessage im) {
-        this.getInstructionQueue().remove(im);
-        sortCollection();
+        if (!this.isInstructionQueueEmpty()) {
+            this.getInstructionQueue().remove(im);
+            sortCollection();
+        }
     }
 
     public void removeFromList(int index) {
-        this.getInstructionQueue().remove(index);
-        sortCollection();
+        if (!this.isInstructionQueueEmpty()) {
+            this.getInstructionQueue().remove(index);
+            sortCollection();
+        }
     }
 
     public InstructionQueue(ArrayList<InstructionMessage> instructionQueue) {
@@ -80,6 +84,8 @@ public class InstructionQueue {
             return null;
         }
     }
+
+
 
 
 
