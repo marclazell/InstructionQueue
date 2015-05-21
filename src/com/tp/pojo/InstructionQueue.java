@@ -65,5 +65,22 @@ public class InstructionQueue {
         });
     }
 
+    public int getInstructionQueueSize() {
+        return this.getInstructionQueue().size();
+    }
+
+    public boolean isInstructionQueueEmpty() {
+        return this.getInstructionQueue().size() == 0;
+    }
+
+    public InstructionMessage getFirstMessage() {
+        if (!isInstructionQueueEmpty()) {
+            return this.getInstructionQueue().get(0);
+        } else {
+            return null;
+        }
+    }
+
+
 
 }
