@@ -5,7 +5,10 @@ import com.tp.pojo.InstructionMessage;
 import junit.framework.TestCase;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.rules.ErrorCollector;
+
+import static org.hamcrest.Matchers.isA;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by dev on 21/05/15.
@@ -13,7 +16,7 @@ import org.junit.rules.ExpectedException;
 public class InstructionMessageTest extends TestCase {
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public ErrorCollector collector = new ErrorCollector();
 
     private InstructionMessage im = new InstructionMessage();
 
@@ -41,9 +44,8 @@ public class InstructionMessageTest extends TestCase {
         super.tearDown();
     }
 
-    
 
-    public void testInstructionTypeValid() throws InvalidMessageException {
+    public void testInstructionTypeValid() {
         instructionMessageValid();
         instructionTypeInvalidLow();
         instructionTypeInvalidHigh();
@@ -55,89 +57,123 @@ public class InstructionMessageTest extends TestCase {
     }
 
     @Test
-    public void instructionMessageValid() throws InvalidMessageException {       
-        im.setInstructionType(VALID_INSTRUCTION_TYPE);
-        im.setProductCode(VALID_PRODUCT_CODE);
-        im.setQuantity(VALID_QUANTITY);
-        im.setUOM(VALID_UOM);
-        im.setTimeStamp(VALID_TIMESTAMP);
-        assertEquals(im.isInstructionMessageValid(), true);
+    public void instructionMessageValid() {
+        try {
+            im.setInstructionType(VALID_INSTRUCTION_TYPE);
+            im.setProductCode(VALID_PRODUCT_CODE);
+            im.setQuantity(VALID_QUANTITY);
+            im.setUOM(VALID_UOM);
+            im.setTimeStamp(VALID_TIMESTAMP);
+            assertEquals(im.isInstructionMessageValid(), true);
+
+        } catch (InvalidMessageException e) {
+            fail("An InvalidMessageException was thrown");
+        }
     }
 
     @Test
-    public void instructionTypeInvalidLow() throws InvalidMessageException {
-        exception.expect(InvalidMessageException.class);
-        im.setInstructionType(INVALID_INSTRUCTION_TYPE_LOW);
-        im.setProductCode(VALID_PRODUCT_CODE);
-        im.setQuantity(VALID_QUANTITY);
-        im.setUOM(VALID_UOM);
-        im.setTimeStamp(VALID_TIMESTAMP);
-        im.isInstructionMessageValid();
+    public void instructionTypeInvalidLow() {
+        try {
+            im.setInstructionType(INVALID_INSTRUCTION_TYPE_LOW);
+            im.setProductCode(VALID_PRODUCT_CODE);
+            im.setQuantity(VALID_QUANTITY);
+            im.setUOM(VALID_UOM);
+            im.setTimeStamp(VALID_TIMESTAMP);
+            im.isInstructionMessageValid();
+            fail("Expected an InvalidMessageException to be thrown");
+        } catch (InvalidMessageException e) {
+            assertThat(e, isA(InvalidMessageException.class));
+        }
     }
 
     @Test
-    public void instructionTypeInvalidHigh() throws InvalidMessageException {
-        exception.expect(InvalidMessageException.class);
-        im.setInstructionType(INVALID_INSTRUCTION_TYPE_HIGH);
-        im.setProductCode(VALID_PRODUCT_CODE);
-        im.setQuantity(VALID_QUANTITY);
-        im.setUOM(VALID_UOM);
-        im.setTimeStamp(VALID_TIMESTAMP);
-        im.isInstructionMessageValid();
+    public void instructionTypeInvalidHigh() {
+        try {
+            im.setInstructionType(INVALID_INSTRUCTION_TYPE_HIGH);
+            im.setProductCode(VALID_PRODUCT_CODE);
+            im.setQuantity(VALID_QUANTITY);
+            im.setUOM(VALID_UOM);
+            im.setTimeStamp(VALID_TIMESTAMP);
+            im.isInstructionMessageValid();
+            fail("Expected an InvalidMessageException to be thrown");
+        } catch (InvalidMessageException e) {
+            assertThat(e, isA(InvalidMessageException.class));
+        }
+
     }
 
     @Test
-    public void productCodeInvalid() throws InvalidMessageException {
-        exception.expect(InvalidMessageException.class);
-        im.setInstructionType(VALID_INSTRUCTION_TYPE);
-        im.setProductCode(INVALID_PRODUCT_CODE);
-        im.setQuantity(VALID_QUANTITY);
-        im.setUOM(VALID_UOM);
-        im.setTimeStamp(VALID_TIMESTAMP);
-        im.isInstructionMessageValid();
+    public void productCodeInvalid() {
+        try {
+            im.setInstructionType(VALID_INSTRUCTION_TYPE);
+            im.setProductCode(INVALID_PRODUCT_CODE);
+            im.setQuantity(VALID_QUANTITY);
+            im.setUOM(VALID_UOM);
+            im.setTimeStamp(VALID_TIMESTAMP);
+            im.isInstructionMessageValid();
+            fail("Expected an InvalidMessageException to be thrown");
+        } catch (InvalidMessageException e) {
+            assertThat(e, isA(InvalidMessageException.class));
+        }
     }
 
     @Test
-    public void quantityInvalid() throws InvalidMessageException {
-        exception.expect(InvalidMessageException.class);
-        im.setInstructionType(VALID_INSTRUCTION_TYPE);
-        im.setProductCode(VALID_PRODUCT_CODE);
-        im.setQuantity(INVALID_QUANTITY);
-        im.setUOM(VALID_UOM);
-        im.setTimeStamp(VALID_TIMESTAMP);
-        im.isInstructionMessageValid();
+    public void quantityInvalid() {
+        try {
+            im.setInstructionType(VALID_INSTRUCTION_TYPE);
+            im.setProductCode(VALID_PRODUCT_CODE);
+            im.setQuantity(INVALID_QUANTITY);
+            im.setUOM(VALID_UOM);
+            im.setTimeStamp(VALID_TIMESTAMP);
+            im.isInstructionMessageValid();
+            fail("Expected an InvalidMessageException to be thrown");
+        } catch (InvalidMessageException e) {
+            assertThat(e, isA(InvalidMessageException.class));
+        }
     }
 
     @Test
-    public void uomInvalidLow() throws InvalidMessageException {
-        exception.expect(InvalidMessageException.class);
-        im.setInstructionType(VALID_INSTRUCTION_TYPE);
-        im.setProductCode(VALID_PRODUCT_CODE);
-        im.setQuantity(VALID_QUANTITY);
-        im.setUOM(INVALID_UOM_LOW);
-        im.setTimeStamp(VALID_TIMESTAMP);
-        im.isInstructionMessageValid();
+    public void uomInvalidLow() {
+        try {
+            im.setInstructionType(VALID_INSTRUCTION_TYPE);
+            im.setProductCode(VALID_PRODUCT_CODE);
+            im.setQuantity(VALID_QUANTITY);
+            im.setUOM(INVALID_UOM_LOW);
+            im.setTimeStamp(VALID_TIMESTAMP);
+            im.isInstructionMessageValid();
+            fail("Expected an InvalidMessageException to be thrown");
+        } catch (InvalidMessageException e) {
+            assertThat(e, isA(InvalidMessageException.class));
+        }
     }
 
     @Test
-    public void uomInvalidHigh() throws InvalidMessageException {
-        exception.expect(InvalidMessageException.class);
-        im.setInstructionType(VALID_INSTRUCTION_TYPE);
-        im.setProductCode(VALID_PRODUCT_CODE);
-        im.setQuantity(VALID_QUANTITY);
-        im.setUOM(INVALID_UOM_HIGH);
-        im.setTimeStamp(VALID_TIMESTAMP);
-        im.isInstructionMessageValid();
+    public void uomInvalidHigh() {
+        try {
+            im.setInstructionType(VALID_INSTRUCTION_TYPE);
+            im.setProductCode(VALID_PRODUCT_CODE);
+            im.setQuantity(VALID_QUANTITY);
+            im.setUOM(INVALID_UOM_HIGH);
+            im.setTimeStamp(VALID_TIMESTAMP);
+            im.isInstructionMessageValid();
+            fail("Expected an InvalidMessageException to be thrown");
+        } catch (InvalidMessageException e) {
+            assertThat(e, isA(InvalidMessageException.class));
+        }
     }
 
     @Test
-    public void timestampInvalid() throws InvalidMessageException {
-        exception.expect(InvalidMessageException.class);
-        im.setInstructionType(VALID_INSTRUCTION_TYPE);
-        im.setProductCode(VALID_PRODUCT_CODE);
-        im.setQuantity(VALID_QUANTITY);
-        im.setUOM(VALID_UOM);
-        im.setTimeStamp(INVALID_TIMESTAMP);
-        im.isInstructionMessageValid();
+    public void timestampInvalid() {
+        try {
+            im.setInstructionType(VALID_INSTRUCTION_TYPE);
+            im.setProductCode(VALID_PRODUCT_CODE);
+            im.setQuantity(VALID_QUANTITY);
+            im.setUOM(VALID_UOM);
+            im.setTimeStamp(INVALID_TIMESTAMP);
+            im.isInstructionMessageValid();
+            fail("Expected an InvalidMessageException to be thrown");
+        } catch (InvalidMessageException e) {
+            assertThat(e, isA(InvalidMessageException.class));
+        }
     }
 }
